@@ -1,5 +1,6 @@
 const HDWalletProvider = require('@truffle/hdwallet-provider');
-const mnemonic = "nut awesome canyon neither lottery genuine orbit crowd potato brother tragic vacuum"
+const fs = require('fs');
+
 
 module.exports = {
   mocha: {},
