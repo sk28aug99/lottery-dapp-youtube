@@ -1,58 +1,77 @@
 // SPDX-License-Identifier: MIT
-
 pragma solidity ^0.8.15;
 
-contract Lottery {
-    address public owner;
-    address payable[] public players;
-    address[] public winners;
-    uint public lotteryId;
+contract Lottery
+{
+    //State  /Storage Variables
+    address public owner;           // owner of the contract
+    address payable[] public players;  // players participating in the lottery
+    address[] public winner;  // winner of the lottery
 
-    constructor() {
+    uint public lotteryId;  // unique Interger
+
+
+    // COnstructor- RUns when the contract is deployed
+
+    constructor()
+    {
         owner = msg.sender;
         lotteryId = 0;
     }
 
-    function getWinners() public view returns (address[] memory){
-        return winners;
+    //Functions - Enter
+
+    function enter() public payable
+    {
+        require(msg.value >= 0.1 ether);  // minimum 1 eth to participate
+        players.push(payable(msg.sender));  // players added to the pool of payable address  
     }
 
-    function getBalance() public view returns (uint) {
-        return address(this).balance;
-    }
+    // Function - Get Players
 
-    function getPlayers() public view returns (address payable[] memory) {
+    function getPlayers() public view returns (address payable[] memory)
+    {
         return players;
     }
 
-    function enter() public payable {
-        require(msg.value >= .01 ether);
+    // Function - Get Balance
 
-        // address of player entering lottery
-        players.push(payable(msg.sender));
+    function getBalance() public view returns (uint)
+    {
+        // Solidity works in WEI
+        return address(this).balance;
     }
 
-    function getRandomNumber() public view returns (uint) {
+
+    //Function - Get Lottery ID
+    function getLotteryId() public view returns (uint)
+    {
+        return lotteryId;
+    } 
+
+    //Get random number - To pick a winner
+    function getRandomNumber() public view returns (uint)
+    {
         return uint(keccak256(abi.encodePacked(owner, block.timestamp)));
     }
 
-    function getLotteryId() public view returns(uint) {
-        return lotteryId;
-    }
-
-
-    function pickWinner() public onlyOwner {
-        uint randomIndex = getRandomNumber() % players.length;
+    //Pick a Winner!
+    function pickWinner() public
+    {
+        require(msg.sender==owner);
+        uint randomIndex = getRandomNumber() % players.length; // indexing starts from 0 -> n-1
         players[randomIndex].transfer(address(this).balance);
-        winners.push(players[randomIndex]);
-        lotteryId++;
+        winner.push(players[randomIndex]);
+        lotteryId++ ;
 
-        // Clear the players array. ['player1', 'player2'] 👉 []
+        // Clear the players after lottery winner has been decided
         players = new address payable[](0);
     }
 
-    modifier onlyOwner() {
-      require(msg.sender == owner);
-      _;
+    // Function ->Get Winner
+
+    function getWinners() public view returns (address[] memory)
+    {
+        return winner;
     }
 }
