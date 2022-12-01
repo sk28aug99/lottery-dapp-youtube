@@ -1,5 +1,6 @@
 const HDWalletProvider = require('@truffle/hdwallet-provider');
-const fs = require('fs');
+const mnemonic = "nut awesome canyon neither lottery genuine orbit crowd potato brother tragic vacuum"
+
 module.exports = {
   mocha: {},
   compilers: {
@@ -9,9 +10,9 @@ module.exports = {
   },
   networks: {
     inf_Lottery_ropsten: {
-      network_id: 3,
-      gasPrice: 100000000000,
-      provider: new HDWalletProvider(fs.readFileSync('/Users/kevin/key.env', 'utf-8'), "https://ropsten.infura.io/v3/ff502fb518804d459de6963dd09e39c1")
+      network_id: 5,
+      gasPrice: 10000000,
+      provider: new HDWalletProvider(mnemonic, 'https://eth-goerli.g.alchemy.com/v2/-jURXRFhzUzFH6RxDKZdMTrEF_OcZefp')
     }
   }
 };
