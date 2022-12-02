@@ -1,6 +1,7 @@
 import style from '../styles/PotCard.module.css'
 import truncateEthAddress from 'truncate-eth-address'
 import { useAppContext } from '../context/context'
+import createLotteryContract  from '../utils/lottery'
 const PotCard = () => {
   const { lotteryId, lastWinner, lotteryPot, enterLottery, pickWinner } =
     useAppContext()
