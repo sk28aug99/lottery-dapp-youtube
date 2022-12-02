@@ -3,7 +3,7 @@ import style from '../styles/Header.module.css'
 import UserCard from './UserCard'
 import WalletConnectBtn from './WalletConnectBtn'
 const Header = () => {
-  const { address, connectWallet } = useAppContext()
+  const { connectWallet, address } = useAppContext()
   return (
     <div className={style.wrapper}>
       <div className={style.title}>Lottery DAPP 💰</div>
