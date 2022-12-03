@@ -42,7 +42,7 @@ export const AppProvider = ({ children }) => {
       await lotteryContract.methods.enter().send({
         from: address,
         // 0.015 ETH in Wei
-        value: '150000000000000',
+        value: '15000000000000000',
         // 0.0003 ETH in Gwei
         gas: 300000,
         gasPrice: null,
